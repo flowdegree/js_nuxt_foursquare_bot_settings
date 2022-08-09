@@ -1,2 +1,4 @@
-import bootsrtap from "bootstrap"
+if(process.client) require('bootstrap')
+
+
 
