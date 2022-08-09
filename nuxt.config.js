@@ -29,7 +29,7 @@ export default {
 
   plugins: [
     {
-      src: '~/plugins/bootstrap.client.js', mode: 'client' 
+      src: '~/plugins/bootstrap.client.js', mode: 'client', ssr:false
     },
   ],
 
