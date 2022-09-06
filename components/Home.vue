@@ -4,7 +4,7 @@
     <h1>Hi</h1>
     <div if="logged_in"></div>
     <div else>You're not logged in, please <a data-toggle="modal" href="#exampleModal">login</a></div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
   Launch demo modal
 </button>
 
@@ -47,7 +47,24 @@
 </template>
 
 <script>
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle'
+
+
 export default {
   name: "NuxtTutorial",
+
+  mounted(){
+    //this.modal = new bModal(document.getElementById('exampleModal'));
+
+  },
+  methods: {
+    toggle () {
+       //this.modal.toggle();
+    }
+  }
 };
+
+
+
+
 </script>

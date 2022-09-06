@@ -1,9 +1,6 @@
 export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
-
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
+  target: 'server',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -18,7 +15,11 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
+
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js',}
     ]
   },
 
@@ -29,7 +30,7 @@ export default {
 
   plugins: [
     {
-      src: '~/plugins/bootstrap.client.js', mode: 'client', ssr:false
+      src: '~/plugins/bootstrap.client.js'
     },
   ],
 
