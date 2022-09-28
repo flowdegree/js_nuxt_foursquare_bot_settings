@@ -1,8 +1,7 @@
 export default {
-  // Target: https://go.nuxtjs.dev/config-target
-  target: 'server',
+  target: 'static',
+  ssr: false,
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'js_nuxt_foursquare_bot_settings',
     htmlAttrs: {
@@ -19,11 +18,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js',}
     ]
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/scss/main.scss'
   ],
@@ -34,26 +31,54 @@ export default {
     },
   ],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
   },
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
+  auth: {
+    strategies: {
+      social : {
+        scheme: 'oauth2',
+        endpoints: {
+          authorization: 'https://foursquare.com/oauth2/authenticate',
+          token: "https://foursquare.com/oauth2/access_token",
+          userInfo: 'https://api.foursquare.com/v2/users/self',
+          logout: 'https://example.com/logout'
+        },
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          maxAge: 1800
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        clientId: 'SSLCJJA1VNRMXXI2OS40YTWS5IDL1155I4QHXRR5YM3HLJ01',
+        redirectUri:'http://localhost:3000/callback',
+        codeChallengeMethod: '',
+
+      }
+  
+    }
+  },
+  
   build: {
+  },
+
+  router: {
+    middleware: ['auth']
   }
+  
+  
 }
