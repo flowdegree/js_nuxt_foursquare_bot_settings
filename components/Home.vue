@@ -5,33 +5,12 @@
       <div class="row">
         <div class="col">
           <div class="">
-            <h1>Hi</h1>
-            <div if="logged_in">
-              You Are Logged in
-            </div>
-            <div else>
-              You're not logged in, please <a role="button" data-bs-toggle="modal" href="#exampleModal">login</a>
-            </div>
+            <h1>Welcome {{ this.$auth.user.firstName }}</h1>
+            <pre dir="ltr">
+              {{ this.$auth.user }}
+            </pre>
 
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    Hello world
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
             
           </div>
         </div>
@@ -43,5 +22,39 @@
 
 <script>
 export default {
+
+  mounted(){
+    console.log('mounted')
+    this.saveUser();
+  },
+  methods: {
+    async saveUser() {
+      let token = this.$auth.strategy.token.get().replace('Bearer ','')
+      console.log('token',token)
+      console.log(await this.$fire.firestore.collection('users').get());
+      const messageRef = this.$fire.firestore.collection('users').doc(this.$auth.user.id)
+      try {
+        await messageRef.set({
+          user: this.$auth.user,
+          token: token,
+          date: new Date(Date.now())
+      })
+      } catch (e) {
+        console.log(e)
+        return
+      }
+      try {
+        await this.$fire.firestore.collection('users').add({
+          email: 'foo@foo.foo', 
+          field: 'test'
+        }
+          
+        )
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
+
 };
 </script>
