@@ -38,12 +38,16 @@ router.get('/authorize' ,(req, res) => {
 
 router.get('/users/self' ,async (req, res) => {
     try {
-        const auth_token = req.headers?.authorization?.split(' ')[1];
-        var response = await axios.get('https://api.foursquare.com/v2/users/self',{ params: {
-            oauth_token: auth_token,
-            v: '20220901'
-        }})
-        await res.json(response.data?.response?.user)
+        //console.log(req.headers.authorization);
+        const auth_token = req.headers?.authorization;
+        //console.log('here')
+        var response = await axios.get('https://api.foursquare.com/v2/users/self',{ 
+            params: {
+                oauth_token: auth_token,
+                v: '20220901'
+            }})
+        
+        await res.json(response.data?.response)
     } 
     catch (error) {
         console.log(error)

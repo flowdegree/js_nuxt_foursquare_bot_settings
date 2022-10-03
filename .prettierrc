@@ -1,5 +1,4 @@
 {
-    "bracketSpacing": true,
     "endOfLine": "lf",
     "htmlWhitespaceSensitivity": "css",
     "singleAttributePerLine": false,

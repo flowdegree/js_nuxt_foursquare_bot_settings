@@ -26,9 +26,8 @@ export default {
   ],
 
   plugins: [
-    {
-      src: '~/plugins/bootstrap.client.js'
-    },
+    {src: '~/plugins/bootstrap.client.js'},
+    {src: '~/plugins/utils.js'},
   ],
 
   components: true,
@@ -83,16 +82,14 @@ export default {
         scheme: "oauth2",
         responseType: 'code',
         clientId: 'OUYWUC4AHY4VSFCWA0EB055U3V4A01WYGRSAZ0MXLS0JKCUA',
-        clientSecret: 'DK3KXOIRRPM3CGGXUYHEDTPVJDDNPDGDE0GYHUBWRCPNQLAG',
         redirectUri: 'http://localhost:3000/login',
         codeChallengeMethod: '',
         accessType: 'offline', 
         token: {
           property: 'access_token',
-          type: 'Bearer',
+          type: '',
           maxAge: 1800,
         },
-  
         endpoints: {
           authorization: "https://foursquare.com/oauth2/authenticate",
           token: "http://localhost:3000/api/swarm/access_token",
