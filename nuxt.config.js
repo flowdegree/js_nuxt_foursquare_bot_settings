@@ -72,29 +72,32 @@ export default {
         pathRewrite: {'^/authenticate/': '/'}
     },
     '/fsapi/': {
-      target: 'https://api.foursquare.com/v2/',
+      target: 'https://localhost:3000/api/swarm/',
       pathRewrite: {'^/fsapi/': '/'}
   },
   },
  
-  
   auth: {
     strategies: {
-      foursquare : {
+      social : {
         scheme: "oauth2",
         responseType: 'code',
-        protocol: '',
         clientId: 'OUYWUC4AHY4VSFCWA0EB055U3V4A01WYGRSAZ0MXLS0JKCUA',
         clientSecret: 'DK3KXOIRRPM3CGGXUYHEDTPVJDDNPDGDE0GYHUBWRCPNQLAG',
         redirectUri: 'http://localhost:3000/login',
-        scope: '',
-        state: 'vUQrsZqoqE#_=_',
+        codeChallengeMethod: '',
+        accessType: 'offline', 
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          maxAge: 1800,
+        },
+  
         endpoints: {
           authorization: "https://foursquare.com/oauth2/authenticate",
-          token: "https://foursquare.com/oauth2/access_token",
-          userInfo: "https://api.foursquare.com/v2/users/self"
+          token: "http://localhost:3000/api/swarm/access_token",
+          userInfo: "http://localhost:3000/api/swarm/users/self"
         },
-        grantType: "authorization_code",
       }
     }
   },

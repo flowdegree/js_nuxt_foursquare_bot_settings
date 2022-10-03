@@ -1,6 +1,7 @@
 <template>
   <header class="p-5 bg-light">
     <div class="container">
+        <a href="/">Logo</a>
         This is header section
     </div>
   </header>

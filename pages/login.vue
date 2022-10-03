@@ -18,7 +18,7 @@ export default {
   methods: {
     async loginSwarm() {
       console.log('before call');
-      await this.$auth.loginWith('foursquare').catch(e => {
+      await this.$auth.loginWith('social').catch(e => {
           console.log('hello')
       })    
     },
