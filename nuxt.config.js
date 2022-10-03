@@ -65,6 +65,7 @@ export default {
     baseURL: '/',
     proxy: true,
   },
+
   proxy: {
     '/authenticate/': {
         target: 'https://foursquare.com/',
@@ -74,7 +75,7 @@ export default {
       target: 'https://api.foursquare.com/v2/',
       pathRewrite: {'^/fsapi/': '/'}
   },
-},
+  },
  
   
   auth: {
@@ -103,7 +104,9 @@ export default {
 
   router: {
     middleware: ['auth']
-  }
+  },
+
+  serverMiddleware: [{ path: '/api', handler: '~/api/index.js' }],
   
   
 }

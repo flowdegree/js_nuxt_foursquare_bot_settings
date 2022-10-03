@@ -14,35 +14,13 @@
 <script>
 export default {
   async asyncData({ route, $axios }) {
-    console.log('hello')
-    if(route.query?.code){
-      console.log('hello')
-      // get token
-      let token =  $axios.get('/authenticate/oauth2/access_token/',{
-        params: {
-          client_id: 'OUYWUC4AHY4VSFCWA0EB055U3V4A01WYGRSAZ0MXLS0JKCUA',
-          client_secret: 'DK3KXOIRRPM3CGGXUYHEDTPVJDDNPDGDE0GYHUBWRCPNQLAG',
-          grant_type: 'authorization_code',
-          redirect_uri: 'http://localhost:3000/swarm',
-          code: route.query.code,
-          v: '20220910'
-        }
-      });
-      console.log(token?.data)
-    }
-
   },
-    methods: {
-        async loginSwarm() {
-            console.log('before call');
-            await this.$auth.loginWith('foursquare').catch(e => {
-                console.log('hello')
-            })
-            
-            
-            console.log('after call')
-            
-            // this.$attrs.loginWith('sawrm', {params: { }})
+  methods: {
+    async loginSwarm() {
+      console.log('before call');
+      await this.$auth.loginWith('foursquare').catch(e => {
+          console.log('hello')
+      })    
     },
   },
 
