@@ -1,8 +1,10 @@
 // * with help of Alexander Lichter, Apr 18, 2020, https://blog.lichter.io/posts/nuxt-api-call-organization-and-decoupling/
-export default $firebase => () => ({
+export default ($firebase, $auth) => () => ({
 
 	async createUserInFirebase() {
-		const userRef = $firebase.firestore.collection("users").doc($auth.user.user.id);
+		console.log($auth);
+		console.log($firebase);
+		const userRef = $firebase.firestore.collection("users").doc($auth.user.id);
 	  
 		try {
 		  await userRef.set({
@@ -23,7 +25,7 @@ export default $firebase => () => ({
 		const configsRef = $firebase.firestore.collection("configs").doc($auth.user.user.id);
 
 			try {
-				userConfigs = await configsRef.get();
+				const userConfigs = await configsRef.get();
 				//console.log(userConfigs);
 				if (!userConfigs.exists) {
 					console.log('No such document!');
@@ -43,6 +45,31 @@ export default $firebase => () => ({
 
 	},
 
+	async setBotStatus(value){
+		try {
+			const configsRef = $firebase.firestore.collection("configs").doc($auth.user.user.id);
+			await configsRef.update({enabled: value});
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+
+	async setAutoCheckinStatus(value){
+		try {
+			const configsRef = $firebase.firestore.collection("configs").doc($auth.user.user.id);
+			await configsRef.update({settings: {
+				auto_check_in: {
+					enabled: value
+				}
+			} });
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	}
 
 
 

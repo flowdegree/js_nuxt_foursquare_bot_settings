@@ -27,7 +27,7 @@ export default {
 
   plugins: [
     {src: '~/plugins/bootstrap.client.js'},
-    {src: '~/plugins/utils.js'},
+    
   ],
 
   components: true,
@@ -96,7 +96,16 @@ export default {
           userInfo: "http://localhost:3000/api/swarm/users/self"
         },
       }
-    }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    },
+    plugins:[
+      {src: '~/plugins/utils.js'},
+    ]  
   },
   
   build: {
