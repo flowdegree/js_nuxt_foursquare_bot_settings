@@ -19,7 +19,7 @@ export default {
     async loginSwarm() {
       console.log('before call');
       await this.$auth.loginWith('social').catch(e => {
-          console.log('hello')
+          console.log('hello error login')
       })    
     },
   },

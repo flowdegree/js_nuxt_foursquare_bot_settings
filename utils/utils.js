@@ -1,4 +1,6 @@
 // * with help of Alexander Lichter, Apr 18, 2020, https://blog.lichter.io/posts/nuxt-api-call-organization-and-decoupling/
+const axios = require('axios').default;
+
 export default ($firebase, $auth) => () => ({
 
 	async createUserInFirebase() {
@@ -60,10 +62,61 @@ export default ($firebase, $auth) => () => ({
 		try {
 			const configsRef = $firebase.firestore.collection("configs").doc($auth.user.user.id);
 			await configsRef.update({settings: {
-				auto_check_in: {
+				checkins: {
 					enabled: value
 				}
 			} });
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	},
+
+	async searchVenues(name){
+		try {
+			let venues_result = await axios.get('https://api.foursquare.com/v3/places/search', {
+				params: {
+					near: 'Saudi Arabia',
+					query: name
+				},
+				headers:{
+					Authorization: 'fsq3mvJJUXXc2bwnfvTp3/YZfKabrAfiORz2rTyxJHTwEPQ='
+				}
+			});
+
+			if(venues_result.data.results.length > 0){
+				return venues_result.data.results;
+			}
+			
+			return {};
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+		
+		
+
+	},
+
+	async setCheckInVenueInformation(venue_info){
+		try {
+			let venue_id = venue_info.id
+
+			let venue_settings = {
+				settings: {
+					checkins: {
+						venues: {}
+					}
+				}
+			};
+
+			venue_settings.settings.checkins.venues[venue_id] = {
+				id: 123
+			}
+
+			const configsRef = $firebase.firestore.collection("configs").doc($auth.user.user.id);
+			await configsRef.update(venue_settings);
 			return true;
 		} catch (error) {
 			console.log(error);

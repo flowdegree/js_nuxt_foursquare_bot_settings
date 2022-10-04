@@ -6,8 +6,8 @@
           <a href="/">Logo</a>
         This is header section
       </div>
-        <div class="col">
-          <button class="btn btn-danger"  @click="logout">Log Out</button>
+        <div class="col text-end">
+          <button class="btn btn-danger btn-sm"  @click="logout"><i class="bi bi-person-fill"></i> Log Out</button>
         </div>
       </div>
         
