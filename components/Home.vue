@@ -98,14 +98,7 @@ export default {
 		}
 	},
 	mounted() {
-		if(this.$auth.user?.user?.firstName){
-			this.user = this.$auth.user.user;
-		}
 
-		console.log('before mutlaq expierment')
-		this.$MFO_UTILS.setCheckInVenueInformation({id: 123})
-		console.log("mounted");
-		this.saveUser();
 	},
 	watch: {
 		venue_search: async function(val){
@@ -140,30 +133,7 @@ export default {
         }
     },
 	methods: {
-		async saveUser() {
-			//console.log(this.$auth.strategy.token.get());
-			//console.log(this.$auth.user)
-			//return;
-			//console.log(await this.$fire.firestore.collection('users').get());
-			const saveUser = await this.$MFO_UTILS.createUserInFirebase();
-
-			// get user configs
-			const userConfigs = await this.$MFO_UTILS.getConfigsFromFirebase();
-			if(userConfigs){
-				if(userConfigs?.enabled == true){
-					this.configs.enabled = true;
-				}
-
-				if(userConfigs?.settings?.checkins?.enabled == true){
-					this.configs.checkins.enabled = true;
-				}
-
-				this.configs.loading = false;
-				this.configs.checkins.loading = false;
-			}
-			console.log(userConfigs)
-			
-		},
+	
 	},
 };
 </script>
