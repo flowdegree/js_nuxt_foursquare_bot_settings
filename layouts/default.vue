@@ -1,18 +1,15 @@
 <template>
-  <div class="app">
-    <Header />
-    <main  style="min-height:50vh;">
-      <nuxt/>
+    <main class="app user">
+        <Header />
+        <nuxt class="mh-50" />
+        <Footer />
     </main>
-    <Footer />
   </div>
 </template>
 
 <script>
-export default {
-}
+export default {};
 </script>
 
 <style>
-
 </style>
