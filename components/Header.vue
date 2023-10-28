@@ -15,17 +15,17 @@
   </header>
 </template>
 
-<script>
-export default {
-  methods:{
-    async logout() {
-      await this.$auth.logout().catch(e => {
+<script setup lang="ts">
+
+const logout =  async() =>{
+
+  const  nuxtApp = useNuxtApp()
+
+  await nuxtApp.$auth.logout().catch(e => {
           console.log('logged out with error', e)
       })
       console.log('logged out')
     }
-  }
-}
 </script>
 
 <style>

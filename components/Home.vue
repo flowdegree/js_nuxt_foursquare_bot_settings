@@ -79,61 +79,58 @@
 </template>
 
 <script>
-export default {
-	data(){
-		return {
-			user: null,
-			configs: {
-				enabled: false,
-				loading: true,
-				checkins: {
-					enabled: false,
-					loading: true,
-					venues: {},
-				}
-			},
-			venue_search: '',
-			bot_enabled_spinner: '',
-			auto_check_in_enabled_spinner: '',
-		}
-	},
-	mounted() {
 
-	},
-	watch: {
-		venue_search: async function(val){
-			if(val.length != 0){
-				//console.log(val);
-				let venue_name = await this.$MFO_UTILS.searchVenues(val);
-				console.log(venue_name[0]?.name);
-			}
-			
-		},
-        'configs.enabled': async function(val, oldVal) {
-			this.bot_enabled_spinner = '';
-			console.log(val);
-			try {
-				let toggle = await this.$MFO_UTILS.setBotStatus(val);
-			} catch (error) {
-				console.log(error)
-			}
+const user = ref(null);
+const configs = ref({
+	enabled: false,
+	loading: true,
+	checkins: {
+		enabled: false,
+		loading: true,
+		venues: {},
+	}
+});
+const venue_search = ref('');
+const bot_enabled_spinner = ref('');
+const auto_check_in_enabled_spinner = ref('');
 
-			this.bot_enabled_spinner = 'd-none';
-        },
-		'configs.checkins.enabled': async function(val, oldVal) {
-			this.auto_check_in_enabled_spinner = '';
-			console.log(val);
-			try {
-				let toggle = await this.$MFO_UTILS.setAutoCheckinStatus(val);
-			} catch (error) {
-				console.log(error)
-			}
-
-			this.auto_check_in_enabled_spinner = 'd-none';
-        }
-    },
-	methods: {
+onMounted(async () => {
 	
-	},
-};
+});
+
+watch(() => configs.value.enabled, async (val, oldVal) => {
+	bot_enabled_spinner.value = '';
+	console.log(val);
+	try {
+		let toggle = await $MFO_UTILS.setBotStatus(val);
+	} catch (error) {
+		console.log(error)
+	}
+
+	bot_enabled_spinner.value = 'd-none';
+});
+
+watch(() => configs.value.checkins.enabled, async (val, oldVal) => {
+	auto_check_in_enabled_spinner.value = '';
+	console.log(val);
+	try {
+		let toggle = await $MFO_UTILS.setAutoCheckinStatus(val);
+	} catch (error) {
+		console.log(error)
+	}
+
+	auto_check_in_enabled_spinner.value = 'd-none';
+});
+
+const logout =  async() =>{
+
+	const  nuxtApp = useNuxtApp()
+
+	await nuxtApp.$auth.logout().catch(e => {
+			console.log('logged out with error', e)
+		})
+		console.log('logged out')
+	}
+
+	
 </script>
